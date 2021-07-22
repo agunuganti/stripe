@@ -1,5 +1,6 @@
 import stripe
 from functools import wraps
+import os
 
 stripe.api_key = os.getenv("STRIPE_KEY")
 
