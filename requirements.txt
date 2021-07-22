@@ -1,4 +1,4 @@
 
-sanic==21.6.0
-Sanic-Cors-1.0.0
+sanic==19.12.2
+Sanic-Cors==0.10.0.post3
 stripe
