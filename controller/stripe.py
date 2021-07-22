@@ -12,7 +12,6 @@ def stripe_handler(stripe_fn):
             # Use Stripe's library to make requests...
             x = stripe_fn(*args, **kwargs)
             return x
-            pass
         except stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught
 
@@ -23,24 +22,24 @@ def stripe_handler(stripe_fn):
             print('Message is: %s' % e.user_message)
         except stripe.error.RateLimitError as e:
             # Too many requests made to the API too quickly
-            return e
+            return e.user_message
         except stripe.error.InvalidRequestError as e:
             # Invalid parameters were supplied to Stripe's API
             return e.user_message
         except stripe.error.AuthenticationError as e:
             # Authentication with Stripe's API failed
             # (maybe you changed API keys recently)
-            return e
+            return e.user_message
         except stripe.error.APIConnectionError as e:
             # Network communication with Stripe failed
-            return e
+            return e.user_message
         except stripe.error.StripeError as e:
             # Display a very generic error to the user, and maybe send
             # yourself an email
-            return e
+            return e.user_message
         except Exception as e:
             # Something else happened, completely unrelated to Stripe
-            return e
+            return e.user_message
 
     return wrapper
 
