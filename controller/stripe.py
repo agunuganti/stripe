@@ -80,9 +80,10 @@ class StripePayments:
     @stripe_handler
     def get_all_charges(self):
         res = []
-        retrive_users = True
+        retrive_users = stripe.Charge.list(limit=100)
+        res.extend(retrive_users)
         while retrive_users:
-            retrive_users = stripe.Charge.list(limit=100)
+            retrive_users = stripe.Charge.list(limit=100, starting_after=retrive_users[-1]["id"])
             if retrive_users:
                 res.extend(retrive_users)
             else:
